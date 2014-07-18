@@ -608,9 +608,9 @@ public class WifiMonitor {
                         new MonitorThread(mWifiNative, this).start();
                         break;
                     }
-                    if (connectTries++ < 5) {
+                    if (connectTries++ < 50) {
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(100);
                         } catch (InterruptedException ignore) {
                         }
                     } else {
