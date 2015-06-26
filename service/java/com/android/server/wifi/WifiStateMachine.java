@@ -1189,6 +1189,14 @@ public class WifiStateMachine extends StateMachine {
         return mWifiConfigStore.alwaysEnableScansWhileAssociated;
     }
 
+    public void setAllowScansWhileAssociated(boolean enabled) {
+        mWifiConfigStore.enableAutoJoinScanWhenAssociated = enabled;
+    }
+
+    public boolean getAllowScansWhileAssociated() {
+        return mWifiConfigStore.enableAutoJoinScanWhenAssociated;
+    }
+
     /*
      *
      * Framework scan control
@@ -7499,7 +7507,12 @@ public class WifiStateMachine extends StateMachine {
                         break;
                     }
                     mLastBssid = (String) message.obj;
-                    mWifiInfo.setBSSID((String) message.obj);
+                    if (mLastBssid != null
+                            && (mWifiInfo.getBSSID() == null
+                            || !mLastBssid.equals(mWifiInfo.getBSSID()))) {
+                        mWifiInfo.setBSSID((String) message.obj);
+                        sendNetworkStateChangeBroadcast(mLastBssid);
+                    }
                     break;
                 default:
                     return NOT_HANDLED;
@@ -7766,6 +7779,7 @@ public class WifiStateMachine extends StateMachine {
                        mWifiInfo.setBSSID(mLastBssid);
                        mWifiInfo.setNetworkId(mLastNetworkId);
                        mWifiConfigStore.handleBSSIDBlackList(mLastNetworkId, mLastBssid, true);
+                       sendNetworkStateChangeBroadcast(mLastBssid);
                        transitionTo(mObtainingIpState);
                    } else {
                        messageHandlingStatus = MESSAGE_HANDLING_STATUS_DISCARD;
