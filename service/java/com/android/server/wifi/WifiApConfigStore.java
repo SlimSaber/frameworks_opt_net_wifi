@@ -237,17 +237,17 @@ class WifiApConfigStore extends StateMachine {
         WifiConfiguration config = new WifiConfiguration();
 
         config.SSID = mContext.getResources().getString(
-                org.cyanogenmod.platform.internal.R.string.config_wifiHotSpotSsid);
+                R.string.config_wifiHotSpotSsid);
         if (TextUtils.isEmpty(config.SSID)) {
             config.SSID = mContext.getString(R.string.wifi_tether_configure_ssid_default);
         }
 
         boolean set_security_none = mContext.getResources().getBoolean(
-                org.cyanogenmod.platform.internal.R.bool.config_wifiHotspotSecurityNone);
+                R.bool.config_wifiHotspotSecurityNone);
         config.allowedKeyManagement.set(set_security_none ? KeyMgmt.NONE : KeyMgmt.WPA2_PSK);
 
         config.preSharedKey = mContext.getResources().getString(
-                org.cyanogenmod.platform.internal.R.string.config_wifiHotSpotPass);
+                R.string.config_wifiHotSpotPass);
         if (TextUtils.isEmpty(config.preSharedKey)) {
             String randomUUID = UUID.randomUUID().toString();
             // first 12 chars from xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx

@@ -2666,7 +2666,7 @@ public final class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                 Settings.Global.WIFI_P2P_DEVICE_NAME);
         if (deviceName == null) {
             String name = mContext.getResources().getString(
-                    org.cyanogenmod.platform.internal.R.string.config_wifiDirectName);
+                    R.string.config_wifiDirectName);
             if (!TextUtils.isEmpty(name)) {
                 return name;
             }
